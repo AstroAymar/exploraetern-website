@@ -1,0 +1,1344 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="ExplorAetern — Autonomous AI propulsion for the next generation of small satellites. Foundational patent filed. Featured at SmallSat Europe 2026." />
+  <meta name="author" content="Aymar Suery" />
+  <meta property="og:title" content="ExplorAetern — Autonomous Propulsion Intelligence" />
+  <meta property="og:description" content="Building the AI that lets satellites think for themselves." />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://exploraetern.com" />
+  <title>ExplorAetern // Autonomous Propulsion Intelligence</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;500;600&family=Inter+Tight:wght@200;300;400;500;600;700&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      --bg: #000000;
+      --bg-shade: #0a0a0a;
+      --ink: #ffffff;
+      --ink-soft: rgba(255, 255, 255, 0.55);
+      --ink-dim: rgba(255, 255, 255, 0.35);
+      --ink-faint: rgba(255, 255, 255, 0.18);
+      --line: rgba(255, 255, 255, 0.10);
+      --line-strong: rgba(255, 255, 255, 0.25);
+      --sans: 'Inter Tight', -apple-system, system-ui, sans-serif;
+      --mono: 'JetBrains Mono', 'SF Mono', monospace;
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    ::selection { background: var(--ink); color: var(--bg); }
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--bg);
+      color: var(--ink);
+      font-family: var(--sans);
+      font-weight: 300;
+      line-height: 1.5;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+      overflow-x: hidden;
+      letter-spacing: -0.005em;
+    }
+
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: 1;
+      background-image:
+        linear-gradient(var(--line) 1px, transparent 1px),
+        linear-gradient(90deg, var(--line) 1px, transparent 1px);
+      background-size: 80px 80px;
+      opacity: 0.4;
+      mask-image: radial-gradient(ellipse at center, black 30%, transparent 75%);
+      -webkit-mask-image: radial-gradient(ellipse at center, black 30%, transparent 75%);
+    }
+
+    body::after {
+      content: "";
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: 100;
+      opacity: 0.03;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+    }
+
+    .container {
+      max-width: 1320px;
+      margin: 0 auto;
+      padding: 0 40px;
+      position: relative;
+      z-index: 2;
+    }
+
+    /* === NAV === */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 50;
+      padding: 20px 40px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      backdrop-filter: blur(24px) saturate(180%);
+      -webkit-backdrop-filter: blur(24px) saturate(180%);
+      background: rgba(0, 0, 0, 0.6);
+      border-bottom: 1px solid var(--line);
+    }
+
+    .logo {
+      font-family: var(--mono);
+      font-size: 13px;
+      font-weight: 500;
+      letter-spacing: 0.05em;
+      color: var(--ink);
+      text-decoration: none;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      text-transform: uppercase;
+    }
+
+    .logo-mark {
+      font-family: var(--sans);
+      font-size: 22px;
+      font-weight: 200;
+      transform: translateY(-1px);
+    }
+
+    .nav-meta {
+      display: flex;
+      gap: 32px;
+      font-size: 11px;
+      font-family: var(--mono);
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--ink-soft);
+    }
+
+    .nav-meta span::before {
+      content: "● ";
+      color: var(--ink);
+      animation: pulse 2s ease-in-out infinite;
+    }
+
+    @keyframes pulse {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.3; }
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 28px;
+      font-size: 11px;
+      font-family: var(--mono);
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+    }
+
+    .nav-links a {
+      color: var(--ink-soft);
+      text-decoration: none;
+      transition: color 0.2s ease;
+    }
+
+    .nav-links a:hover { color: var(--ink); }
+
+    @media (max-width: 1000px) {
+      .nav-meta { display: none; }
+    }
+    @media (max-width: 720px) {
+      .nav-links { display: none; }
+      nav { padding: 16px 24px; }
+    }
+
+    /* === HERO === */
+    .hero {
+      min-height: 100vh;
+      display: grid;
+      grid-template-columns: 1.1fr 1fr;
+      align-items: center;
+      padding: 120px 40px 80px;
+      max-width: 1320px;
+      margin: 0 auto;
+      position: relative;
+      gap: 60px;
+    }
+
+    @media (max-width: 1000px) {
+      .hero { grid-template-columns: 1fr; padding: 100px 24px 60px; }
+      .hero-orbit { max-width: 380px; margin: 0 auto; }
+    }
+
+    .hero-content { position: relative; z-index: 3; }
+
+    .hero-eyebrow {
+      font-family: var(--mono);
+      font-size: 11px;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--ink-soft);
+      margin-bottom: 40px;
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      animation: fadeUp 0.8s ease 0.1s both;
+    }
+
+    .hero-eyebrow::before {
+      content: "";
+      width: 28px;
+      height: 1px;
+      background: var(--ink);
+    }
+
+    .hero-eyebrow-tag {
+      padding: 3px 8px;
+      border: 1px solid var(--line-strong);
+      color: var(--ink);
+      font-size: 10px;
+    }
+
+    .hero h1 {
+      font-family: var(--sans);
+      font-weight: 200;
+      font-size: clamp(38px, 6vw, 84px);
+      line-height: 0.98;
+      letter-spacing: -0.04em;
+      margin-bottom: 36px;
+      animation: fadeUp 0.8s ease 0.2s both;
+    }
+
+    .hero h1 strong { font-weight: 600; }
+
+    .hero-sub {
+      font-size: 17px;
+      max-width: 540px;
+      color: var(--ink-soft);
+      line-height: 1.6;
+      margin-bottom: 40px;
+      font-weight: 300;
+      animation: fadeUp 0.8s ease 0.4s both;
+    }
+
+    .hero-meta {
+      display: flex;
+      margin-bottom: 40px;
+      animation: fadeUp 0.8s ease 0.5s both;
+    }
+
+    .hero-meta-item {
+      flex: 1;
+      padding: 14px 18px;
+      border: 1px solid var(--line);
+      border-right: none;
+    }
+
+    .hero-meta-item:last-child { border-right: 1px solid var(--line); }
+
+    .hero-meta-label {
+      font-family: var(--mono);
+      font-size: 9px;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--ink-dim);
+      margin-bottom: 6px;
+    }
+
+    .hero-meta-value {
+      font-family: var(--mono);
+      font-size: 12px;
+      color: var(--ink);
+      font-weight: 500;
+    }
+
+    .hero-cta {
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+      animation: fadeUp 0.8s ease 0.6s both;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 14px;
+      padding: 14px 22px;
+      font-family: var(--mono);
+      font-size: 11px;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      text-decoration: none;
+      border: 1px solid var(--ink);
+      transition: all 0.2s ease;
+      cursor: pointer;
+      font-weight: 500;
+    }
+
+    .btn-primary {
+      background: var(--ink);
+      color: var(--bg);
+    }
+
+    .btn-primary:hover {
+      background: transparent;
+      color: var(--ink);
+    }
+
+    .btn-ghost {
+      background: transparent;
+      color: var(--ink);
+      border-color: var(--line-strong);
+    }
+
+    .btn-ghost:hover { border-color: var(--ink); }
+
+    .btn .arrow {
+      transition: transform 0.2s ease;
+      font-family: var(--mono);
+    }
+
+    .btn:hover .arrow { transform: translateX(4px); }
+
+    /* === ORBIT VISUALIZATION === */
+    .hero-orbit {
+      position: relative;
+      width: 100%;
+      aspect-ratio: 1;
+      max-width: 520px;
+      justify-self: end;
+      animation: fadeIn 1.2s ease 0.8s both;
+    }
+
+    .orbit-svg {
+      width: 100%;
+      height: 100%;
+      overflow: visible;
+    }
+
+    .orbit-svg .earth-fill {
+      fill: var(--bg);
+      stroke: var(--ink);
+      stroke-width: 1;
+    }
+
+    .orbit-svg .earth-grid {
+      fill: none;
+      stroke: var(--line-strong);
+      stroke-width: 0.5;
+    }
+
+    .orbit-svg .orbit-path {
+      fill: none;
+      stroke: var(--ink-faint);
+      stroke-width: 1;
+      stroke-dasharray: 2 4;
+    }
+
+    .orbit-svg .orbit-active {
+      fill: none;
+      stroke: var(--ink);
+      stroke-width: 1;
+      stroke-dasharray: 800;
+      stroke-dashoffset: 800;
+      animation: drawOrbit 3s ease-out 1s forwards;
+    }
+
+    .orbit-svg .satellite-dot {
+      fill: var(--ink);
+    }
+
+    .orbit-svg text {
+      font-family: var(--mono);
+      font-size: 8px;
+      fill: var(--ink-soft);
+      letter-spacing: 0.1em;
+    }
+
+    .orbit-rotator {
+      transform-origin: 200px 200px;
+      animation: rotate 30s linear infinite;
+    }
+
+    .orbit-rotator-fast {
+      transform-origin: 200px 200px;
+      animation: rotate 20s linear infinite reverse;
+    }
+
+    @keyframes rotate {
+      from { transform: rotate(0deg); }
+      to { transform: rotate(360deg); }
+    }
+
+    @keyframes drawOrbit {
+      to { stroke-dashoffset: 0; }
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+
+    /* === SECTIONS === */
+    section {
+      padding: 140px 0;
+      border-top: 1px solid var(--line);
+      position: relative;
+    }
+
+    @media (max-width: 800px) {
+      section { padding: 80px 0; }
+      .container { padding: 0 24px; }
+    }
+
+    .section-label {
+      font-family: var(--mono);
+      font-size: 10px;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--ink-soft);
+      margin-bottom: 40px;
+    }
+
+    .section-label::before { content: "[ "; color: var(--ink); }
+    .section-label::after { content: " ]"; color: var(--ink); }
+
+    .section-number {
+      position: absolute;
+      top: 60px;
+      right: 40px;
+      font-family: var(--mono);
+      font-size: 11px;
+      color: var(--ink-dim);
+      letter-spacing: 0.1em;
+    }
+
+    @media (max-width: 800px) {
+      .section-number { top: 30px; right: 24px; font-size: 10px; }
+    }
+
+    .section-title {
+      font-family: var(--sans);
+      font-weight: 200;
+      font-size: clamp(34px, 5vw, 64px);
+      line-height: 1.02;
+      letter-spacing: -0.035em;
+      margin-bottom: 56px;
+      max-width: 1000px;
+    }
+
+    .section-title strong { font-weight: 600; }
+
+    /* === PROBLEM === */
+    .problem-grid {
+      display: grid;
+      grid-template-columns: 1fr 1.2fr;
+      gap: 80px;
+      align-items: start;
+    }
+
+    @media (max-width: 900px) {
+      .problem-grid { grid-template-columns: 1fr; gap: 40px; }
+    }
+
+    .problem-text p {
+      font-size: 18px;
+      color: var(--ink-soft);
+      line-height: 1.6;
+      margin-bottom: 20px;
+      font-weight: 300;
+    }
+
+    .problem-text p:last-child { color: var(--ink); }
+
+    .problem-list {
+      list-style: none;
+      border-top: 1px solid var(--line);
+    }
+
+    .problem-list li {
+      padding: 28px 0;
+      border-bottom: 1px solid var(--line);
+      display: grid;
+      grid-template-columns: 60px 1fr;
+      gap: 24px;
+      align-items: baseline;
+      transition: padding-left 0.3s ease;
+    }
+
+    .problem-list li:hover { padding-left: 12px; }
+
+    .problem-list .num {
+      font-family: var(--mono);
+      font-size: 10px;
+      color: var(--ink-soft);
+      letter-spacing: 0.1em;
+      padding-top: 4px;
+    }
+
+    .problem-list .label {
+      font-family: var(--sans);
+      font-size: 20px;
+      font-weight: 400;
+      letter-spacing: -0.015em;
+      color: var(--ink);
+    }
+
+    .problem-list .desc {
+      font-size: 14px;
+      color: var(--ink-soft);
+      margin-top: 8px;
+      grid-column: 2;
+      line-height: 1.5;
+    }
+
+    /* === VISION === */
+    .vision-text { max-width: 920px; }
+
+    .vision-text p {
+      font-size: clamp(20px, 2.5vw, 28px);
+      font-weight: 200;
+      line-height: 1.4;
+      letter-spacing: -0.02em;
+      color: var(--ink);
+      margin-bottom: 28px;
+    }
+
+    .vision-text p.dim {
+      color: var(--ink-soft);
+      font-size: clamp(18px, 2vw, 22px);
+    }
+
+    .vision-text .highlight {
+      font-weight: 500;
+      color: var(--ink);
+      border-bottom: 1px solid var(--ink);
+      padding-bottom: 2px;
+    }
+
+    /* === RESULTS === */
+    .results-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      border: 1px solid var(--line);
+      margin-bottom: 32px;
+    }
+
+    @media (max-width: 800px) {
+      .results-grid { grid-template-columns: 1fr; }
+    }
+
+    .result-cell {
+      padding: 40px 32px;
+      border-right: 1px solid var(--line);
+      transition: background 0.3s ease;
+    }
+
+    .result-cell:last-child { border-right: none; }
+
+    @media (max-width: 800px) {
+      .result-cell {
+        border-right: none;
+        border-bottom: 1px solid var(--line);
+      }
+      .result-cell:last-child { border-bottom: none; }
+    }
+
+    .result-cell:hover { background: var(--bg-shade); }
+
+    .result-tag {
+      font-family: var(--mono);
+      font-size: 10px;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--ink-dim);
+      margin-bottom: 24px;
+      display: flex;
+      justify-content: space-between;
+    }
+
+    .result-num {
+      font-family: var(--sans);
+      font-size: clamp(44px, 5vw, 72px);
+      font-weight: 200;
+      line-height: 1;
+      letter-spacing: -0.04em;
+      margin-bottom: 20px;
+      color: var(--ink);
+    }
+
+    .result-num strong { font-weight: 500; }
+
+    .result-unit {
+      font-weight: 300;
+      font-size: 0.5em;
+      color: var(--ink-soft);
+      margin-left: 4px;
+    }
+
+    .result-label {
+      font-family: var(--mono);
+      font-size: 11px;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--ink-soft);
+      line-height: 1.5;
+    }
+
+    .results-note {
+      font-family: var(--mono);
+      font-size: 11px;
+      color: var(--ink-dim);
+      letter-spacing: 0.05em;
+      max-width: 600px;
+      line-height: 1.7;
+    }
+
+    /* === RECOGNITION === */
+    .recognition { background: var(--bg-shade); }
+
+    .recognition-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      border: 1px solid var(--line);
+    }
+
+    @media (max-width: 900px) {
+      .recognition-grid { grid-template-columns: 1fr; }
+    }
+
+    .recognition-card {
+      padding: 36px 32px;
+      border-right: 1px solid var(--line);
+      background: var(--bg);
+      transition: background 0.3s ease;
+    }
+
+    .recognition-card:last-child { border-right: none; }
+
+    @media (max-width: 900px) {
+      .recognition-card {
+        border-right: none;
+        border-bottom: 1px solid var(--line);
+      }
+      .recognition-card:last-child { border-bottom: none; }
+    }
+
+    .recognition-card:hover { background: var(--bg-shade); }
+
+    .recognition-tag {
+      font-family: var(--mono);
+      font-size: 10px;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--ink-soft);
+      margin-bottom: 24px;
+      display: flex;
+      justify-content: space-between;
+      padding-bottom: 16px;
+      border-bottom: 1px solid var(--line);
+    }
+
+    .recognition-tag-status { color: var(--ink); }
+
+    .recognition-title {
+      font-family: var(--sans);
+      font-size: 19px;
+      font-weight: 500;
+      line-height: 1.3;
+      letter-spacing: -0.015em;
+      margin-bottom: 16px;
+      color: var(--ink);
+    }
+
+    .recognition-meta {
+      font-family: var(--mono);
+      font-size: 11px;
+      color: var(--ink-soft);
+      letter-spacing: 0.02em;
+      line-height: 1.7;
+    }
+
+    /* === ROADMAP === */
+    .roadmap-list {
+      list-style: none;
+      max-width: 1100px;
+      border-top: 1px solid var(--line);
+    }
+
+    .roadmap-list li {
+      display: grid;
+      grid-template-columns: 120px 1fr 100px 140px;
+      gap: 32px;
+      padding: 36px 0;
+      border-bottom: 1px solid var(--line);
+      align-items: baseline;
+      transition: padding-left 0.3s ease;
+    }
+
+    .roadmap-list li:hover { padding-left: 12px; }
+
+    @media (max-width: 800px) {
+      .roadmap-list li {
+        grid-template-columns: 1fr;
+        gap: 10px;
+      }
+    }
+
+    .roadmap-phase {
+      font-family: var(--mono);
+      font-size: 10px;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--ink-soft);
+    }
+
+    .roadmap-title {
+      font-family: var(--sans);
+      font-size: 22px;
+      font-weight: 400;
+      letter-spacing: -0.02em;
+      color: var(--ink);
+    }
+
+    .roadmap-title small {
+      display: block;
+      font-family: var(--sans);
+      font-size: 14px;
+      color: var(--ink-soft);
+      margin-top: 8px;
+      font-weight: 300;
+    }
+
+    .roadmap-progress {
+      font-family: var(--mono);
+      font-size: 11px;
+      color: var(--ink-soft);
+      letter-spacing: 0.1em;
+    }
+
+    .roadmap-status {
+      font-family: var(--mono);
+      font-size: 10px;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      padding: 6px 12px;
+      border: 1px solid var(--line-strong);
+      text-align: center;
+      justify-self: end;
+    }
+
+    @media (max-width: 800px) {
+      .roadmap-status { justify-self: start; }
+    }
+
+    .status-done {
+      background: var(--ink);
+      color: var(--bg);
+      border-color: var(--ink);
+    }
+    .status-current {
+      color: var(--ink);
+      border-color: var(--ink);
+    }
+    .status-next { color: var(--ink-dim); }
+
+    /* === FOUNDER === */
+    .founder-grid {
+      display: grid;
+      grid-template-columns: 1fr 1.5fr;
+      gap: 80px;
+      align-items: start;
+    }
+
+    @media (max-width: 900px) {
+      .founder-grid { grid-template-columns: 1fr; gap: 40px; }
+    }
+
+    .founder-card {
+      border: 1px solid var(--line);
+      padding: 36px;
+    }
+
+    .founder-id {
+      font-family: var(--mono);
+      font-size: 10px;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--ink-dim);
+      margin-bottom: 32px;
+      display: flex;
+      justify-content: space-between;
+      padding-bottom: 16px;
+      border-bottom: 1px solid var(--line);
+    }
+
+    .founder-name {
+      font-family: var(--sans);
+      font-size: 32px;
+      font-weight: 500;
+      letter-spacing: -0.025em;
+      margin-bottom: 4px;
+      color: var(--ink);
+    }
+
+    .founder-role {
+      font-family: var(--mono);
+      font-size: 11px;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--ink-soft);
+      margin-bottom: 28px;
+    }
+
+    .founder-info { list-style: none; }
+
+    .founder-info li {
+      padding: 14px 0;
+      border-top: 1px solid var(--line);
+      font-size: 14px;
+      color: var(--ink-soft);
+      display: flex;
+      justify-content: space-between;
+      gap: 16px;
+    }
+
+    .founder-info li span:first-child {
+      font-family: var(--mono);
+      font-size: 10px;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--ink-dim);
+    }
+
+    .founder-info li span:last-child {
+      text-align: right;
+      color: var(--ink);
+      font-family: var(--mono);
+      font-size: 12px;
+    }
+
+    .founder-bio p {
+      font-size: clamp(18px, 2.2vw, 22px);
+      font-weight: 300;
+      line-height: 1.5;
+      letter-spacing: -0.015em;
+      color: var(--ink);
+      margin-bottom: 24px;
+    }
+
+    .founder-bio p.dim {
+      color: var(--ink-soft);
+      font-size: clamp(16px, 1.8vw, 18px);
+    }
+
+    .founder-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      font-family: var(--mono);
+      font-size: 11px;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--ink);
+      text-decoration: none;
+      padding: 12px 18px;
+      border: 1px solid var(--line-strong);
+      margin-top: 16px;
+      transition: all 0.2s ease;
+    }
+
+    .founder-link:hover {
+      border-color: var(--ink);
+      background: var(--ink);
+      color: var(--bg);
+    }
+
+    /* === CONTACT === */
+    .contact {
+      text-align: center;
+      padding: 180px 40px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .contact::before,
+    .contact::after {
+      content: "";
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      border: 1px solid var(--line);
+      border-radius: 50%;
+      pointer-events: none;
+    }
+
+    .contact::before {
+      width: 600px;
+      height: 600px;
+    }
+
+    .contact::after {
+      width: 380px;
+      height: 380px;
+    }
+
+    .contact-eyebrow {
+      font-family: var(--mono);
+      font-size: 11px;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--ink-soft);
+      margin-bottom: 40px;
+      position: relative;
+      z-index: 2;
+    }
+
+    .contact h2 {
+      font-family: var(--sans);
+      font-weight: 200;
+      font-size: clamp(44px, 7vw, 90px);
+      line-height: 0.95;
+      letter-spacing: -0.04em;
+      margin-bottom: 36px;
+      position: relative;
+      z-index: 2;
+    }
+
+    .contact h2 strong { font-weight: 600; }
+
+    .contact-sub {
+      font-size: 17px;
+      color: var(--ink-soft);
+      max-width: 540px;
+      margin: 0 auto 56px;
+      line-height: 1.6;
+      position: relative;
+      z-index: 2;
+    }
+
+    .contact-email {
+      font-family: var(--mono);
+      font-size: clamp(16px, 2.2vw, 24px);
+      color: var(--ink);
+      text-decoration: none;
+      letter-spacing: -0.01em;
+      padding: 14px 28px;
+      border: 1px solid var(--ink);
+      display: inline-block;
+      transition: all 0.25s ease;
+      position: relative;
+      z-index: 2;
+    }
+
+    .contact-email:hover {
+      background: var(--ink);
+      color: var(--bg);
+    }
+
+    /* === FOOTER === */
+    footer {
+      border-top: 1px solid var(--line);
+      padding: 32px 40px;
+      position: relative;
+      z-index: 2;
+    }
+
+    .footer-grid {
+      max-width: 1320px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 24px;
+      align-items: center;
+      font-family: var(--mono);
+      font-size: 10px;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--ink-dim);
+    }
+
+    @media (max-width: 700px) {
+      .footer-grid {
+        grid-template-columns: 1fr;
+        text-align: center;
+      }
+    }
+
+    .footer-center { text-align: center; }
+    .footer-right { text-align: right; }
+
+    @media (max-width: 700px) {
+      .footer-right { text-align: center; }
+    }
+
+    .footer-grid a {
+      color: var(--ink-soft);
+      text-decoration: none;
+      margin-left: 20px;
+      transition: color 0.2s ease;
+    }
+
+    .footer-grid a:first-child { margin-left: 0; }
+    .footer-grid a:hover { color: var(--ink); }
+
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+  </style>
+</head>
+<body>
+
+  <nav>
+    <a href="#" class="logo">
+      <span class="logo-mark">∞</span>
+      <span>ExplorAetern</span>
+    </a>
+    <div class="nav-meta">
+      <span>SYS.ACTIVE</span>
+      <span>2026</span>
+    </div>
+    <div class="nav-links">
+      <a href="#problem">01 / Problem</a>
+      <a href="#vision">02 / Vision</a>
+      <a href="#results">03 / Results</a>
+      <a href="#roadmap">04 / Roadmap</a>
+      <a href="#contact">05 / Contact</a>
+    </div>
+  </nav>
+
+  <!-- HERO -->
+  <header class="hero">
+    <div class="hero-content">
+      <div class="hero-eyebrow">
+        Autonomous Propulsion Intelligence
+        <span class="hero-eyebrow-tag">EAI-001</span>
+      </div>
+      <h1>The autonomous<br><strong>brain</strong> for the<br>next era of orbit.</h1>
+      <p class="hero-sub">
+        ExplorAetern develops onboard intelligence for next-generation small satellites &mdash; enabling autonomous decision-making, smarter propulsion, and reduced ground-station dependency.
+      </p>
+      <div class="hero-meta">
+        <div class="hero-meta-item">
+          <div class="hero-meta-label">Status</div>
+          <div class="hero-meta-value">Phase 01 → 02</div>
+        </div>
+        <div class="hero-meta-item">
+          <div class="hero-meta-label">Patent</div>
+          <div class="hero-meta-value">Filed · MA</div>
+        </div>
+        <div class="hero-meta-item">
+          <div class="hero-meta-label">Next</div>
+          <div class="hero-meta-value">SmallSat EU '26</div>
+        </div>
+      </div>
+      <div class="hero-cta">
+        <a href="#contact" class="btn btn-primary">
+          Initiate Contact <span class="arrow">→</span>
+        </a>
+        <a href="#vision" class="btn btn-ghost">
+          System Overview <span class="arrow">↓</span>
+        </a>
+      </div>
+    </div>
+
+    <!-- ORBITAL VISUALIZATION -->
+    <div class="hero-orbit">
+      <svg class="orbit-svg" viewBox="0 0 400 400" xmlns="http://www.w3.org/2000/svg">
+        <circle cx="200" cy="200" r="195" fill="none" stroke="rgba(255,255,255,0.08)" stroke-width="0.5"/>
+        <circle cx="200" cy="200" r="180" fill="none" stroke="rgba(255,255,255,0.08)" stroke-width="0.5" stroke-dasharray="1 3"/>
+
+        <line x1="200" y1="0" x2="200" y2="400" stroke="rgba(255,255,255,0.08)" stroke-width="0.5"/>
+        <line x1="0" y1="200" x2="400" y2="200" stroke="rgba(255,255,255,0.08)" stroke-width="0.5"/>
+
+        <g>
+          <circle class="earth-fill" cx="200" cy="200" r="55"/>
+          <ellipse class="earth-grid" cx="200" cy="200" rx="55" ry="18"/>
+          <ellipse class="earth-grid" cx="200" cy="200" rx="55" ry="36"/>
+          <line class="earth-grid" x1="200" y1="145" x2="200" y2="255"/>
+          <line class="earth-grid" x1="145" y1="200" x2="255" y2="200"/>
+          <path class="earth-grid" d="M 200 145 Q 226 200 200 255" />
+          <path class="earth-grid" d="M 200 145 Q 174 200 200 255" />
+        </g>
+
+        <ellipse class="orbit-path" cx="200" cy="200" rx="115" ry="115"/>
+        <ellipse class="orbit-path" cx="200" cy="200" rx="150" ry="150" transform="rotate(35 200 200)"/>
+
+        <g class="orbit-rotator">
+          <ellipse class="orbit-active" cx="200" cy="200" rx="115" ry="115"/>
+          <circle class="satellite-dot" cx="315" cy="200" r="3"/>
+          <rect x="311" y="196" width="8" height="8" fill="none" stroke="white" stroke-width="0.5"/>
+          <line x1="319" y1="200" x2="332" y2="200" stroke="white" stroke-width="0.5"/>
+          <text x="335" y="203">SAT-01</text>
+        </g>
+
+        <g class="orbit-rotator-fast">
+          <circle class="satellite-dot" cx="200" cy="50" r="2" opacity="0.5"/>
+        </g>
+
+        <text x="200" y="14" text-anchor="middle">LEO · 550 KM</text>
+        <text x="200" y="392" text-anchor="middle">EQ · 0°</text>
+        <text x="14" y="204" text-anchor="start">W</text>
+        <text x="386" y="204" text-anchor="end">E</text>
+
+        <g stroke="white" stroke-width="1" fill="none">
+          <path d="M 10 10 L 30 10 M 10 10 L 10 30"/>
+          <path d="M 390 10 L 370 10 M 390 10 L 390 30"/>
+          <path d="M 10 390 L 30 390 M 10 390 L 10 370"/>
+          <path d="M 390 390 L 370 390 M 390 390 L 390 370"/>
+        </g>
+
+        <g opacity="0.7">
+          <text x="20" y="60">ALT: 550.00 KM</text>
+          <text x="20" y="72">VEL: 7.59 KM/S</text>
+          <text x="20" y="84">INC: 51.6°</text>
+          <text x="280" y="60">PWR: 87%</text>
+          <text x="280" y="72">MODE: AUTO</text>
+          <text x="280" y="84">∆V: 0.12</text>
+        </g>
+      </svg>
+    </div>
+  </header>
+
+  <!-- PROBLEM -->
+  <section id="problem">
+    <div class="container">
+      <div class="section-number">[ 01 / 05 ]</div>
+      <div class="section-label">The Problem</div>
+      <h2 class="section-title">Today's satellites are <strong>dumb terminals.</strong></h2>
+      <div class="problem-grid">
+        <div class="problem-text">
+          <p>They wait for ground commands. They waste energy in overly conservative safety zones. They can't adapt to what they encounter in orbit.</p>
+          <p>In a world of thousands of CubeSats, that doesn't scale.</p>
+          <p>Satellites should be smarter than that.</p>
+        </div>
+        <ul class="problem-list">
+          <li>
+            <span class="num">01</span>
+            <div>
+              <div class="label">Energy waste</div>
+              <div class="desc">Rule-based systems are too conservative with battery and thermal limits.</div>
+            </div>
+          </li>
+          <li>
+            <span class="num">02</span>
+            <div>
+              <div class="label">Operational slowness</div>
+              <div class="desc">Heavy dependence on ground stations, even for simple maneuvers.</div>
+            </div>
+          </li>
+          <li>
+            <span class="num">03</span>
+            <div>
+              <div class="label">Limited endurance</div>
+              <div class="desc">Small form factors struggle with energy-hungry ion thrusters.</div>
+            </div>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- VISION -->
+  <section id="vision">
+    <div class="container">
+      <div class="section-number">[ 02 / 05 ]</div>
+      <div class="section-label">The Vision</div>
+      <h2 class="section-title">A new generation of <strong>autonomous</strong> satellites.</h2>
+      <div class="vision-text">
+        <p>ExplorAetern develops onboard intelligence for next-generation CubeSats. Our technology enables satellites to <span class="highlight">make their own decisions</span> &mdash; saving energy, accelerating missions, and reducing ground dependency.</p>
+        <p class="dim">The foundation is built. The patent is filed. The future is in orbit.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- RESULTS -->
+  <section id="results">
+    <div class="container">
+      <div class="section-number">[ 03 / 05 ]</div>
+      <div class="section-label">Validated in Simulation</div>
+      <h2 class="section-title">Numbers that <strong>matter.</strong></h2>
+      <div class="results-grid">
+        <div class="result-cell">
+          <div class="result-tag">
+            <span>METRIC.01</span>
+            <span>MISSION_∆V</span>
+          </div>
+          <div class="result-num">10–20<span class="result-unit">%</span></div>
+          <div class="result-label">Faster mission<br>completion</div>
+        </div>
+        <div class="result-cell">
+          <div class="result-tag">
+            <span>METRIC.02</span>
+            <span>POWER</span>
+          </div>
+          <div class="result-num">8–15<span class="result-unit">%</span></div>
+          <div class="result-label">Energy efficiency<br>gain</div>
+        </div>
+        <div class="result-cell">
+          <div class="result-tag">
+            <span>METRIC.03</span>
+            <span>IP</span>
+          </div>
+          <div class="result-num"><strong>Patent</strong></div>
+          <div class="result-label">Foundational IP<br>filed</div>
+        </div>
+      </div>
+      <p class="results-note">
+        &gt; PRELIMINARY RESULTS FROM LEO SIMULATION SCENARIOS.<br>
+        &gt; FULL TECHNICAL SPECIFICATION AVAILABLE UNDER NDA.
+      </p>
+    </div>
+  </section>
+
+  <!-- RECOGNITION -->
+  <section class="recognition">
+    <div class="container">
+      <div class="section-number">[ 04A / 05 ]</div>
+      <div class="section-label">Recognition &amp; Milestones</div>
+      <h2 class="section-title">Early signals from <strong>the right rooms.</strong></h2>
+      <div class="recognition-grid">
+        <div class="recognition-card">
+          <div class="recognition-tag">
+            <span>★ Invited</span>
+            <span class="recognition-tag-status">MAY 2026</span>
+          </div>
+          <div class="recognition-title">SmallSat Europe 2026</div>
+          <div class="recognition-meta">
+            RAI AMSTERDAM<br>
+            MAY 26–28<br>
+            EUROPE'S LARGEST SMALL-SATELLITE EVENT
+          </div>
+        </div>
+        <div class="recognition-card">
+          <div class="recognition-tag">
+            <span>★ Member</span>
+            <span class="recognition-tag-status">ID 1860484</span>
+          </div>
+          <div class="recognition-title">AIAA — American Institute of Aeronautics &amp; Astronautics</div>
+          <div class="recognition-meta">
+            STUDENT MEMBER<br>
+            EARLY TECHNICAL RECOGNITION<br>
+            INTERNATIONAL AEROSPACE BODY
+          </div>
+        </div>
+        <div class="recognition-card">
+          <div class="recognition-tag">
+            <span>★ Incoming</span>
+            <span class="recognition-tag-status">SEP 2026</span>
+          </div>
+          <div class="recognition-title">École Centrale Lyon — MSc Aerospace</div>
+          <div class="recognition-meta">
+            LYON, FRANCE<br>
+            EUROPEAN AEROSPACE ECOSYSTEM<br>
+            MOBILITY PROGRAM
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ROADMAP -->
+  <section id="roadmap">
+    <div class="container">
+      <div class="section-number">[ 04 / 05 ]</div>
+      <div class="section-label">Roadmap</div>
+      <h2 class="section-title">From validated concept <strong>to orbit.</strong></h2>
+      <ul class="roadmap-list">
+        <li>
+          <span class="roadmap-phase">Phase 01</span>
+          <div class="roadmap-title">
+            Concept validated
+            <small>Foundational research, simulation results, and IP secured.</small>
+          </div>
+          <span class="roadmap-progress">2025</span>
+          <span class="roadmap-status status-done">Complete</span>
+        </li>
+        <li>
+          <span class="roadmap-phase">Phase 02</span>
+          <div class="roadmap-title">
+            Real-world integration
+            <small>Hardware-in-the-loop validation. Seeking partners and grants.</small>
+          </div>
+          <span class="roadmap-progress">2026–2027</span>
+          <span class="roadmap-status status-current">Active</span>
+        </li>
+        <li>
+          <span class="roadmap-phase">Phase 03</span>
+          <div class="roadmap-title">
+            Orbital demonstration
+            <small>Prototype launch and flight demonstration.</small>
+          </div>
+          <span class="roadmap-progress">2028+</span>
+          <span class="roadmap-status status-next">Pending</span>
+        </li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- FOUNDER -->
+  <section id="founder">
+    <div class="container">
+      <div class="section-number">[ 05 / 05 ]</div>
+      <div class="section-label">Founder</div>
+      <h2 class="section-title">Built by an <strong>engineer.</strong></h2>
+      <div class="founder-grid">
+        <div class="founder-card">
+          <div class="founder-id">
+            <span>OPERATOR.01</span>
+            <span>EAI-PRIMARY</span>
+          </div>
+          <div class="founder-name">Aymar Suery</div>
+          <div class="founder-role">Founder · ExplorAetern</div>
+          <ul class="founder-info">
+            <li><span>Affiliation</span><span>AIAA</span></li>
+            <li><span>Member ID</span><span>1860484</span></li>
+            <li><span>Education</span><span>Centrale Lyon</span></li>
+            <li><span>Focus</span><span>AI · Propulsion</span></li>
+            <li><span>Base</span><span>MA → FR</span></li>
+          </ul>
+        </div>
+        <div class="founder-bio">
+          <p>Aerospace engineer working at the intersection of artificial intelligence and small-satellite propulsion.</p>
+          <p class="dim">Building ExplorAetern to bring real autonomy to the next generation of CubeSats &mdash; from validated simulation results to orbital demonstration.</p>
+          <a href="#" class="founder-link" id="linkedin-link">
+            Connect on LinkedIn <span class="arrow">→</span>
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CONTACT -->
+  <section id="contact" class="contact">
+    <div class="contact-eyebrow">// INITIATE CONTACT //</div>
+    <h2>Let's build<br>the future of <strong>orbit.</strong></h2>
+    <p class="contact-sub">
+      For investors, partners, and engineers working on the future of satellite autonomy.
+    </p>
+    <a href="mailto:aymar@exploraetern.com" class="contact-email">aymar@exploraetern.com</a>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="footer-grid">
+      <div>© 2026 ExplorAetern · A research project</div>
+      <div class="footer-center">EAI // V0.1 // 31.6° N / 7.98° W</div>
+      <div class="footer-right">
+        <a href="/privacy">Privacy</a>
+        <a href="/terms">Terms</a>
+      </div>
+    </div>
+  </footer>
+
+</body>
+</html>
